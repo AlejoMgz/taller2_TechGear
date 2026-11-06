@@ -11,3 +11,6 @@ def registro_view(request):
 
 def dashboard_view(request):
     return render(request, 'motos/dashboard.html')
+
+def pedidos_cliente_view(request):
+    return render(request, 'motos/pedidos.html')

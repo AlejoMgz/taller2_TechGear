@@ -1,0 +1,35 @@
+{% extends 'motos/base.html' %}
+{% block title %}Mis Pedidos - TechGear Motos{% endblock %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="fw-bold">Historial de Pedidos</h1>
+        <p class="text-muted">Consulta el estado actual de tus solicitudes y compras de motocicletas.</p>
+    </div>
+</div>
+
+<div class="card p-4 shadow">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>ID Pedido</th>
+                    <th>Moto Seleccionada</th>
+                    <th>Cantidad</th>
+                    <th>Estado</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#TG-8092</td>
+                    <td class="fw-bold">Boxer 150 Tech</td>
+                    <td>1</td>
+                    <td><span class="badge bg-success">Completado</span></td>
+                    <td>$6,500,000 COP</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
