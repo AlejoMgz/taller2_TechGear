@@ -1,0 +1,44 @@
+{% extends 'motos/base.html' %}
+{% block title %}Dashboard Admin - TechGear Motos{% endblock %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1 class="fw-bold">Panel de Administración</h1>
+        <p class="text-muted">Gestión de inventario y catálogo de motocicletas.</p>
+    </div>
+    <div class="col-md-4 text-end">
+        <button class="btn btn-orange" data-bs-toggle="modal" data-bs-target="#modalProducto">➕ Agregar Nueva
+            Moto</button>
+    </div>
+</div>
+
+<div class="card p-3 shadow">
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Modelo</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="https://via.placeholder.com/60" class="rounded" alt="Moto"></td>
+                    <td class="fw-bold">Boxer 150 Tech</td>
+                    <td><span class="badge bg-warning text-dark">Urbana</span></td>
+                    <td>$6,500,000 COP</td>
+                    <td>12</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary">Editar</button>
+                        <button class="btn btn-sm btn-outline-danger">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

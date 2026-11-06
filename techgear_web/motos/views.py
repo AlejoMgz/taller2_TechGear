@@ -8,3 +8,6 @@ def login_view(request):
 
 def registro_view(request):
     return render(request, 'motos/registro.html')
+
+def dashboard_view(request):
+    return render(request, 'motos/dashboard.html')
