@@ -126,3 +126,6 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+# Guardar las sesiones en las cookies del navegador para evitar errores en entornos de solo lectura (como Vercel)
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
