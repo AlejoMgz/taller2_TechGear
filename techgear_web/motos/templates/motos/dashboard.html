@@ -7,8 +7,7 @@
         <p class="text-muted">Gestión de inventario y catálogo de motocicletas.</p>
     </div>
     <div class="col-md-4 text-end">
-        <button class="btn btn-orange" data-bs-toggle="modal" data-bs-target="#modalProducto">➕ Agregar Nueva
-            Moto</button>
+        <button class="btn btn-orange" onclick="abrirModal('Nueva Moto', '', '', '', '')">➕ Agregar Nueva Moto</button>
     </div>
 </div>
 
@@ -26,19 +25,97 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><img src="https://via.placeholder.com/60" class="rounded" alt="Moto"></td>
-                    <td class="fw-bold">Boxer 150 Tech</td>
-                    <td><span class="badge bg-warning text-dark">Urbana</span></td>
-                    <td>$6,500,000 COP</td>
-                    <td>12</td>
+                {% for moto in motos %}
+                <tr id="row-{{ moto.id }}">
+                    <td><img src="{{ moto.imagen }}" width="60" height="60" class="rounded object-fit-cover" alt="Moto">
+                    </td>
+                    <td class="fw-bold" id="nombre-{{ moto.id }}">{{ moto.nombre }}</td>
+                    <td><span class="badge bg-warning text-dark" id="cat-{{ moto.id }}">{{ moto.categoria }}</span></td>
+                    <td id="precio-{{ moto.id }}">{{ moto.precio }}</td>
+                    <td id="stock-{{ moto.id }}">{{ moto.stock }}</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">Editar</button>
-                        <button class="btn btn-sm btn-outline-danger">Eliminar</button>
+                        <button class="btn btn-sm btn-outline-primary me-1"
+                            onclick="abrirModal('Editar Moto', '{{ moto.id }}', '{{ moto.nombre }}', '{{ moto.precio }}', '{{ moto.stock }}')">Editar</button>
+                        <button class="btn btn-sm btn-outline-danger"
+                            onclick="eliminarRow('{{ moto.id }}')">Eliminar</button>
                     </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+
+<!-- Modal para Editar/Agregar -->
+<div class="modal fade" id="motoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark text-light border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title" id="modalTitulo">Editar Moto</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formMoto">
+                    <input type="hidden" id="motoId">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre del Modelo</label>
+                        <input type="text" class="form-control bg-secondary text-light border-0" id="inputNombre">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio</label>
+                        <input type="text" class="form-control bg-secondary text-light border-0" id="inputPrecio">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Stock</label>
+                        <input type="number" class="form-control bg-secondary text-light border-0" id="inputStock">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">URL de la Imagen (Link directo web)</label>
+                        <input type="url" class="form-control bg-secondary text-light border-0" id="inputImagen"
+                            placeholder="https://ejemplo.com/moto.jpg">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-header border-secondary justify-content-end">
+                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-orange" onclick="guardarCambios()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let modalObj;
+    document.addEventListener('DOMContentLoaded', function () {
+        modalObj = new bootstrap.Modal(document.getElementById('motoModal'));
+    });
+
+    function abrirModal(titulo, id, nombre, precio, stock) {
+        document.getElementById('modalTitulo').innerText = titulo;
+        document.getElementById('motoId').value = id;
+        document.getElementById('inputNombre').value = nombre;
+        document.getElementById('inputPrecio').value = precio;
+        document.getElementById('inputStock').value = stock;
+        modalObj.show();
+    }
+
+    function guardarCambios() {
+        const id = document.getElementById('motoId').value;
+        if (id) {
+            document.getElementById('nombre-' + id).innerText = document.getElementById('inputNombre').value;
+            document.getElementById('precio-' + id).innerText = document.getElementById('inputPrecio').value;
+            document.getElementById('stock-' + id).innerText = document.getElementById('inputStock').value;
+        }
+        modalObj.hide();
+    }
+
+    function eliminarRow(id) {
+        if (confirm('¿Deseas eliminar este registro?')) {
+            document.getElementById('row-' + id).remove();
+        }
+    }
+</script>
 {% endblock %}

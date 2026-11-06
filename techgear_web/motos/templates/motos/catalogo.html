@@ -9,100 +9,21 @@
 </div>
 
 <div class="row g-4">
-    <!-- Tarjeta Moto 1 -->
+    {% for moto in motos %}
     <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-secondary">
+        <div class="card h-100 shadow-sm">
+            <img src="{{ moto.imagen }}" class="card-img-top img-moto" alt="{{ moto.nombre }}">
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title fw-bold">Boxer 150 Tech</h5>
-                <p class="card-text text-muted flex-grow-1">Diseñada para la ciudad y rendimiento óptimo en carretera
-                    con bajo consumo.</p>
-                <span class="badge bg-warning text-dark mb-3 w-50">Urbana / Sport</span>
+                <h5 class="card-title fw-bold">{{ moto.nombre }}</h5>
+                <p class="card-text text-muted flex-grow-1">{{ moto.descripcion }}</p>
+                <span class="badge bg-warning text-dark mb-3 w-50">{{ moto.categoria }}</span>
                 <div class="d-flex justify-content-between align-items-center mt-3">
-                    <span class="fs-5 fw-bold text-success">$6,500,000 COP</span>
-                    <button class="btn btn-orange btn-sm">Ver Detalles</button>
+                    <span class="fs-5 fw-bold text-success">{{ moto.precio }}</span>
+                    <a href="{% url 'detalle_moto' moto.id %}" class="btn btn-orange btn-sm">Ver Detalles</a>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Tarjeta Moto 2 -->
-    <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-secondary">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title fw-bold">Pulsar NS 200 FI</h5>
-                <p class="card-text text-muted flex-grow-1">Potencia naked con inyección electrónica y frenos ABS de
-                    alta respuesta.</p>
-                <span class="badge bg-danger text-light mb-3 w-50">Naked / Alta Gama</span>
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                    <span class="fs-5 fw-bold text-success">$11,200,000 COP</span>
-                    <button class="btn btn-orange btn-sm">Ver Detalles</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tarjeta Moto 3 -->
-    <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-secondary">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title fw-bold">Apache RTR 200 4V</h5>
-                <p class="card-text text-muted flex-grow-1">Tecnología de carreras en pista adaptada para dominar las
-                    calles de la ciudad.</p>
-                <span class="badge bg-info text-dark mb-3 w-50">Racing / Sport</span>
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                    <span class="fs-5 fw-bold text-success">$10,500,000 COP</span>
-                    <button class="btn btn-orange btn-sm">Ver Detalles</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tarjeta Moto 4 -->
-    <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-secondary">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title fw-bold">KTM Duke 200 NG</h5>
-                <p class="card-text text-muted flex-grow-1">Agresiva, ligera y con un chasis multitubular listo para
-                    cualquier desafío.</p>
-                <span class="badge bg-warning text-dark mb-3 w-50">Naked / Sport</span>
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                    <span class="fs-5 fw-bold text-success">$14,900,000 COP</span>
-                    <button class="btn btn-orange btn-sm">Ver Detalles</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tarjeta Moto 5 -->
-    <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-secondary">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title fw-bold">Suzuki Gixxer 250</h5>
-                <p class="card-text text-muted flex-grow-1">Motor monocilíndrico con tecnología SEP y un diseño
-                    aerodinámico superior.</p>
-                <span class="badge bg-primary text-light mb-3 w-50">Sport / Turismo</span>
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                    <span class="fs-5 fw-bold text-success">$13,800,000 COP</span>
-                    <button class="btn btn-orange btn-sm">Ver Detalles</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tarjeta Moto 6 -->
-    <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-secondary">
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title fw-bold">Yamaha FZ-S FI V3</h5>
-                <p class="card-text text-muted flex-grow-1">Estilo robusto, excelente ergonomía y máxima eficiencia de
-                    combustible.</p>
-                <span class="badge bg-success text-light mb-3 w-50">Urbana</span>
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                    <span class="fs-5 fw-bold text-success">$9,100,000 COP</span>
-                    <button class="btn btn-orange btn-sm">Ver Detalles</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 {% endblock %}

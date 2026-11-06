@@ -1,0 +1,29 @@
+{% extends 'motos/base.html' %}
+{% block title %}{{ moto.nombre }} - TechGear Motos{% endblock %}
+{% block content %}
+<div class="row bg-dark p-4 rounded border border-secondary">
+    <div class="col-md-6">
+        <img src="{{ moto.imagen }}" class="img-fluid rounded shadow" alt="{{ moto.nombre }}">
+    </div>
+    <div class="col-md-6 d-flex flex-column justify-content-center">
+        <span class="badge bg-warning text-dark mb-2 w-25">{{ moto.categoria }}</span>
+        <h1 class="display-4 fw-bold">{{ moto.nombre }}</h1>
+        <h3 class="text-success mb-3">{{ moto.precio }}</h3>
+        <p class="lead">{{ moto.descripcion }}</p>
+
+        <div class="my-3 p-3 bg-secondary bg-opacity-25 rounded">
+            <h5>Ficha Técnica:</h5>
+            <ul>
+                <li><strong>Cilindraje:</strong> {{ moto.cilindraje }}</li>
+                <li><strong>Potencia Máxima:</strong> {{ moto.potencia }}</li>
+                <li><strong>Disponibilidad (Stock):</strong> {{ moto.stock }} unidades</li>
+            </ul>
+        </div>
+
+        <div class="d-flex gap-2">
+            <a href="{% url 'catalogo' %}" class="btn btn-outline-light">← Volver al Catálogo</a>
+            <button class="btn btn-orange">Comprar Ahora</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
