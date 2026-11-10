@@ -1,121 +1,116 @@
 {% extends 'motos/base.html' %}
-{% block title %}Dashboard Admin - TechGear Motos{% endblock %}
+{% load static %}
+{% block title %}Dashboard - TechGear Motos{% endblock %}
 {% block content %}
-<div class="row mb-4">
+<div class="row mb-4 align-items-center">
     <div class="col-md-8">
         <h1 class="fw-bold">Panel de Administración</h1>
-        <p class="text-muted">Gestión de inventario y catálogo de motocicletas.</p>
+        <p class="text-muted">Gestión de inventario y catálogo general de motocicletas.</p>
     </div>
     <div class="col-md-4 text-end">
-        <button class="btn btn-orange" onclick="abrirModal('Nueva Moto', '', '', '', '')">➕ Agregar Nueva Moto</button>
+        <button type="button" class="btn btn-primary shadow-sm" onclick="abrirModal('crear', '', '', '', '', '')">➕ Agregar Nueva Moto</button>
     </div>
 </div>
 
-<div class="card p-3 shadow">
-    <div class="table-responsive">
-        <table class="table table-dark table-hover align-middle">
-            <thead>
-                <tr>
-                    <th>Imagen</th>
-                    <th>Modelo</th>
-                    <th>Categoría</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for moto in motos %}
-                <tr id="row-{{ moto.id }}">
-                    <td><img src="{{ moto.imagen }}" width="60" height="60" class="rounded object-fit-cover" alt="Moto">
-                    </td>
-                    <td class="fw-bold" id="nombre-{{ moto.id }}">{{ moto.nombre }}</td>
-                    <td><span class="badge bg-warning text-dark" id="cat-{{ moto.id }}">{{ moto.categoria }}</span></td>
-                    <td id="precio-{{ moto.id }}">{{ moto.precio }}</td>
-                    <td id="stock-{{ moto.id }}">{{ moto.stock }}</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary me-1"
-                            onclick="abrirModal('Editar Moto', '{{ moto.id }}', '{{ moto.nombre }}', '{{ moto.precio }}', '{{ moto.stock }}')">Editar</button>
-                        <button class="btn btn-sm btn-outline-danger"
-                            onclick="eliminarRow('{{ moto.id }}')">Eliminar</button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-3">Imagen</th>
+                        <th>Modelo</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th class="text-end pe-3">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for moto in motos %}
+                    <tr>
+                        <td class="ps-3"><img src="{{ moto.imagen }}" width="50" height="50" class="rounded object-fit-cover shadow-sm" alt="{{ moto.nombre }} - motocicleta TechGear" loading="lazy" decoding="async"></td>
+                        <td class="fw-bold">{{ moto.nombre }}</td>
+                        <td><span class="badge bg-secondary">{{ moto.categoria }}</span></td>
+                        <td>{{ moto.precio }}</td>
+                        <td>{{ moto.stock }}</td>
+                        <td class="text-end pe-3">
+                            <button type="button" class="btn btn-sm btn-outline-primary me-1" onclick="abrirModal('editar', '{{ moto.id }}', '{{ moto.nombre }}', '{{ moto.precio }}', '{{ moto.stock }}', '{{ moto.categoria }}')">Editar</button>
+
+                            <form method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <input type="hidden" name="accion" value="eliminar">
+                                <input type="hidden" name="moto_id" value="{{ moto.id }}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
-<!-- Modal para Editar/Agregar -->
-<div class="modal fade" id="motoModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content bg-dark text-light border-secondary">
-            <div class="modal-header border-secondary">
-                <h5 class="modal-title" id="modalTitulo">Editar Moto</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="formMoto">
-                    <input type="hidden" id="motoId">
+<div class="modal fade" id="motoModal" tabindex="-1" aria-labelledby="modalTitulo" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="accion" id="inputAccion" value="crear">
+                <input type="hidden" name="moto_id" id="motoId">
+
+                <div class="modal-header bg-primary text-white">
+                    <h2 class="modal-title h5" id="modalTitulo">Gestionar Moto</h2>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar modal"></button>
+                </div>
+                <div class="modal-body p-4">
                     <div class="mb-3">
-                        <label class="form-label">Nombre del Modelo</label>
-                        <input type="text" class="form-control bg-secondary text-light border-0" id="inputNombre">
+                        <label for="inputNombre" class="form-label fw-semibold">Nombre del Modelo</label>
+                        <input type="text" class="form-control" id="inputNombre" name="nombre" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Precio</label>
-                        <input type="text" class="form-control bg-secondary text-light border-0" id="inputPrecio">
+                        <label for="inputCategoria" class="form-label fw-semibold">Categoría</label>
+                        <input type="text" class="form-control" id="inputCategoria" name="categoria" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Stock</label>
-                        <input type="number" class="form-control bg-secondary text-light border-0" id="inputStock">
+                        <label for="inputPrecio" class="form-label fw-semibold">Precio (Ej: $8,000,000 COP)</label>
+                        <input type="text" class="form-control" id="inputPrecio" name="precio" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">URL de la Imagen (Link directo web)</label>
-                        <input type="url" class="form-control bg-secondary text-light border-0" id="inputImagen"
-                            placeholder="https://ejemplo.com/moto.jpg">
+                        <label for="inputStock" class="form-label fw-semibold">Stock Disponible</label>
+                        <input type="number" class="form-control" id="inputStock" name="stock" required>
                     </div>
-                </form>
-            </div>
-            <div class="modal-header border-secondary justify-content-end">
-                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-orange" onclick="guardarCambios()">Guardar Cambios</button>
-            </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous" defer></script>
 <script>
     let modalObj;
     document.addEventListener('DOMContentLoaded', function () {
         modalObj = new bootstrap.Modal(document.getElementById('motoModal'));
     });
 
-    function abrirModal(titulo, id, nombre, precio, stock) {
-        document.getElementById('modalTitulo').innerText = titulo;
+    function abrirModal(accion, id, nombre, precio, stock, categoria) {
+        document.getElementById('inputAccion').value = accion;
+        document.getElementById('modalTitulo').innerText = accion === 'editar' ? 'Editar Motocicleta' : 'Agregar Nueva Motocicleta';
         document.getElementById('motoId').value = id;
         document.getElementById('inputNombre').value = nombre;
         document.getElementById('inputPrecio').value = precio;
         document.getElementById('inputStock').value = stock;
+        document.getElementById('inputCategoria').value = categoria || 'Urbana';
         modalObj.show();
-    }
-
-    function guardarCambios() {
-        const id = document.getElementById('motoId').value;
-        if (id) {
-            document.getElementById('nombre-' + id).innerText = document.getElementById('inputNombre').value;
-            document.getElementById('precio-' + id).innerText = document.getElementById('inputPrecio').value;
-            document.getElementById('stock-' + id).innerText = document.getElementById('inputStock').value;
-        }
-        modalObj.hide();
-    }
-
-    function eliminarRow(id) {
-        if (confirm('¿Deseas eliminar este registro?')) {
-            document.getElementById('row-' + id).remove();
-        }
     }
 </script>
 {% endblock %}

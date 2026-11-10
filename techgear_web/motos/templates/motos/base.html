@@ -1,80 +1,132 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="TechGear Motos ofrece motocicletas urbanas, deportivas y de alta gama con fichas técnicas, precios y disponibilidad actualizada.">
+    <meta name="theme-color" content="#0d6efd">
+    <meta name="robots" content="index, follow">
     <title>{% block title %}TechGear Motos{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'motos/images/favicon.svg' %}" type="image/svg+xml">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         :root {
-            --bg-dark: #121214;
-            --card-dark: #1f1f23;
-            --accent-orange: #ff5722;
-            --text-light: #f4f4f9;
+            --bg-main: #f8f9fa;
+            --text-main: #212529;
+            --brand-primary: #0d6efd;
+            --card-bg: #ffffff;
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
         }
 
         .navbar {
-            background-color: #0b0b0d !important;
-            border-bottom: 2px solid var(--accent-orange);
-        }
-
-        .btn-orange {
-            background-color: var(--accent-orange);
-            color: white;
-            font-weight: 600;
-        }
-
-        .btn-orange:hover {
-            background-color: #e64a19;
-            color: white;
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
         }
 
         .card {
-            background-color: var(--card-dark);
-            color: var(--text-light);
-            border: 1px solid #2d2d35;
+            background-color: var(--card-bg);
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
         }
 
         .img-moto {
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            border-top-left-radius: .375rem;
-            border-top-right-radius: .375rem;
+            width: 100%;
+            border-top-left-radius: calc(0.5rem - 1px);
+            border-top-right-radius: calc(0.5rem - 1px);
         }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark px-4">
-        <a class="navbar-brand fw-bold text-uppercase" href="{% url 'catalogo' %}">🏍️ TechGear <span
-                style="color: var(--accent-orange);">Motos</span></a>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light px-4 sticky-top" aria-label="Navegación principal">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold text-primary" href="{% url 'catalogo' %}"
+                    aria-label="TechGear Motos, inicio"> TechGear Motos</a>
+                <div class="ms-auto d-flex align-items-center gap-3">
+                    {% if usuario %}
+                    <span class="badge bg-light text-dark border p-2"> <strong>{{ usuario.nombre }}</strong></span>
+                    {% if usuario.rol == 'admin' %}
+                    <a href="{% url 'dashboard' %}" class="btn btn-dark btn-sm fw-bold">⚙️ Dashboard Admin</a>
+                    {% endif %}
+                    <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Cerrar Sesión</a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm">Iniciar Sesión</a>
+                    <a href="{% url 'registro' %}" class="btn btn-primary btn-sm">Registrarse</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </header>
 
-        <div class="ms-auto d-flex align-items-center gap-2">
-            {% if usuario %}
-            <span class="badge bg-secondary p-2">👤 Hola, <strong>{{ usuario.nombre }}</strong></span>
-            {% if usuario.rol == 'admin' %}
-            <a href="{% url 'dashboard' %}" class="btn btn-warning btn-sm fw-bold">⚙️ Dashboard Admin</a>
-            {% endif %}
-            <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Cerrar Sesión</a>
-            {% else %}
-            <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Iniciar Sesión</a>
-            <a href="{% url 'registro' %}" class="btn btn-orange btn-sm">Registrarse</a>
-            {% endif %}
-        </div>
-    </nav>
-
-    <div class="container my-5">
+    <main class="container my-5" id="contenido-principal">
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
-    <!-- Cargar Bootstrap Bundle al final para asegurar funcionamiento de Modales -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <footer class="bg-dark text-light mt-5">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-12 col-md-6 col-lg-5">
+                    <a class="d-inline-block text-decoration-none text-white fw-bold fs-4 mb-3"
+                        href="{% url 'catalogo' %}"> TechGear Motos</a>
+                    <p class="text-white-50 mb-0">
+                        Encuentra tu próxima moto y consulta sus especificaciones, precio y disponibilidad.
+                    </p>
+                </div>
+                <div class="col-6 col-md-3 col-lg-3">
+                    <h2 class="h6 text-uppercase fw-bold mb-3">Explora</h2>
+                    <nav aria-label="Enlaces del catálogo">
+                        <ul class="list-unstyled d-grid gap-2 mb-0">
+                            <li><a class="link-light link-underline-opacity-0 link-underline-opacity-75-hover"
+                                    href="{% url 'catalogo' %}">Catálogo de motos</a></li>
+                            <li><a class="link-light link-underline-opacity-0 link-underline-opacity-75-hover"
+                                    href="{% url 'registro' %}">Crear una cuenta</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-6 col-md-3 col-lg-4">
+                    <h2 class="h6 text-uppercase fw-bold mb-3">Tu cuenta</h2>
+                    <nav aria-label="Enlaces de cuenta">
+                        <ul class="list-unstyled d-grid gap-2 mb-0">
+                            <li><a class="link-light link-underline-opacity-0 link-underline-opacity-75-hover"
+                                    href="{% url 'login' %}">Iniciar sesión</a></li>
+                            <li><a class="link-light link-underline-opacity-0 link-underline-opacity-75-hover"
+                                    href="{% url 'registro' %}">Registrarse</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="border-top border-secondary mt-4 pt-3">
+                <p class="text-white-50 small mb-0">© {% now "Y" %} TechGear Motos. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
     {% block scripts %}{% endblock %}
 </body>
 

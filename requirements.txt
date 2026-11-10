@@ -3,3 +3,7 @@ uvicorn
 pymongo
 pydantic[email]
 python-dotenv
+django>=4.2,<5.0
+requests
+gunicorn
+psycopg2-binary
