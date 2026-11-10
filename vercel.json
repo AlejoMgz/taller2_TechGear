@@ -1,19 +1,20 @@
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "techgear_web/techgear_web_core/wsgi.py",
-            "use": "@vercel/python",
-            "config": {
-                "maxLambdaSize": "15mb",
-                "runtime": "python3.11"
-            }
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "techgear_web/techgear_web_core/wsgi.py"
-        }
-    ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "techgear_web/techgear_web_core/wsgi.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3.11" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "techgear_web/motos/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "techgear_web/techgear_web_core/wsgi.py"
+    }
+  ]
 }
