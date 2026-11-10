@@ -19,58 +19,58 @@ Markdown
 
 El repositorio se encuentra organizado de la siguiente manera:
 
-
+```text
 techgear_project/
-│
-├── techgear_api/                  # Módulo de servicios de API backend
+├── techgear_api/
 │   ├── src/
-│   │   ├── models/                # Modelos de datos de la API
+│   │   ├── models/
 │   │   │   └── user_model.py
-│   │   ├── database.py            # Configuración de base de datos para la API
-│   │   └── main.py                # Archivo principal de ejecución de la API
-│   ├── .env                       # Variables de entorno de la API
+│   │   ├── database.py
+│   │   └── main.py
+│   ├── .env
 │   └── README.md
 │
-├── techgear_web/                  # Aplicación principal Django (Frontend y MVT)
+├── techgear_web/
 │   ├── motos/
-│   │   ├── migrations/            # Carpeta de migraciones de la base de datos
+│   │   ├── migrations/
 │   │   │   └── __init__.py
-│   │   ├── static/                # Archivos estáticos
+│   │   ├── static/
 │   │   │   └── motos/
-│   │   │       └── images/        # Recursos gráficos locales optimizados
+│   │   │       └── images/
 │   │   │           ├── apachetrtr.png
 │   │   │           ├── boxer150.jpg
 │   │   │           └── ns200.jpg
-│   │   ├── templates/             # Plantillas HTML de la interfaz
+│   │   ├── templates/
 │   │   │   └── motos/
-│   │   │       ├── base.html      # Plantilla principal con Navbar y Footer
-│   │   │       ├── catalogo.html  # Vista del catálogo de motocicletas
-│   │   │       ├── dashboard.html # Panel administrativo con CRUD modal
-│   │   │       ├── detalle.html   # Vista detallada y ficha técnica
-│   │   │       ├── login.html     # Formulario de inicio de sesión
-│   │   │       └── registro.html  # Formulario de registro de usuarios
+│   │   │       ├── base.html
+│   │   │       ├── catalogo.html
+│   │   │       ├── dashboard.html
+│   │   │       ├── detalle.html
+│   │   │       ├── login.html
+│   │   │       └── registro.html
 │   │   ├── __init__.py
-│   │   ├── admin.py               # Configuración del panel de administración nativo
-│   │   ├── apps.py                # Configuración de la aplicación motos
-│   │   ├── models.py              # Modelos de datos de Django
-│   │   ├── tests.py               # Pruebas unitarias
-│   │   ├── urls.py                # Enrutador de la app de motos
-│   │   └── views.py               # Lógica de negocio, autenticación y CRUD
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   └── views.py
 │   │
-│   ├── techgear_web_core/         # Configuración central de Django
+│   ├── techgear_web_core/
 │   │   ├── __init__.py
-│   │   ├── asgi.py                # Configuración asíncrona
-│   │   ├── settings.py            # Configuración general y de seguridad del proyecto
-│   │   ├── urls.py                # URLs principales del proyecto web
-│   │   └── wsgi.py                # Configuración para despliegue en servidor
+│   │   ├── asgi.py
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   └── wsgi.py
 │   │
-│   ├── db.sqlite3                 # Base de datos local SQLite
-│   ├── manage.py                  # Script de gestión y comandos de Django
-│   ├── requirements.txt           # Dependencias y librerías del sistema web
-│   └── vercel.json                # Archivo de configuración para el despliegue en Vercel
+│   ├── db.sqlite3
+│   ├── manage.py
+│   ├── requirements.txt
+│   └── vercel.json
 │
-├── .gitignore                     # Archivos y carpetas ignoradas por Git
-└── README.md                      # Documentación completa del repositorio
+├── .gitignore
+└── README.md
+```
 
 🛡️ Manejo de Excepciones
 El sistema incorpora robustas estrategias de control de errores y excepciones para garantizar la continuidad operativa y una excelente experiencia de usuario:
