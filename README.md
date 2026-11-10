@@ -19,6 +19,7 @@ Markdown
 
 El repositorio se encuentra organizado de la siguiente manera:
 
+
 techgear_project/
 │
 ├── techgear_api/                  # Módulo de servicios de API backend
